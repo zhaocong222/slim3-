@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Slim 3</title>
+        <style>
+            body {
+                margin: 50px 0 0 0;
+                padding: 0;
+                width: 100%;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                text-align: center;
+                color: #aaa;
+                font-size: 18px;
+            }
+
+            h1 {
+                color: #719e40;
+                letter-spacing: -3px;
+                font-family: 'Lato', sans-serif;
+                font-size: 100px;
+                font-weight: 200;
+                margin-bottom: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Slim</h1>
+        <div>a microframework for PHP</div>
+
+        <?php if (isset($name)) : ?>
+            <h2>Hello <?= htmlspecialchars($name); ?>!</h2>
+        <?php else: ?>
+            <p>Try <a href="http://www.slimframework.com">SlimFramework</a>
+        <?php endif; ?>
+    <form method="post" action="/yinliao" >
+            <p><input type="text" name="water"  value="哇哈哈"></p>
+            <p><input type="text" name="price"  value="5.0"></p>
+            <p><input type="text"  name="csrf_name" value="<?php echo $name;?>" / ></p>
+            <p><input type="text"  name="csrf_value" value="<?php echo $val;?>" / ></p>
+            <p><input type="submit" value="提交"></p>
+    </form>
+    </body>
+</html>
