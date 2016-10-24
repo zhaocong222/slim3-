@@ -1,6 +1,9 @@
 <?php
 // Routes
 
+$app->get('/weibo/user','HomeController:index');
+
+
 $app->put('/user', function ($request, $response, $args) {
 
     $parsedBody = $request->getParsedBody();

@@ -17,6 +17,17 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
 
+        //mysql
+        'db'=>[
+            'driver' => 'mysql',
+            'host' => '127.0.0.1',
+            'database' => 'weibo',
+            'username' => 'root',
+            'password' => '123456',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ],
 
     ],
 ];
