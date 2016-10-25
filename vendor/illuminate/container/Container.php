@@ -323,6 +323,9 @@ class Container implements ArrayAccess, ContainerContract
      * @param  mixed   $instance
      * @return void
      */
+
+    //instance 方法主要就是　注册一个现有的实例　到容器中 ，
+    //核心$this->instances[$abstract] = $instance;
     public function instance($abstract, $instance)
     {
         $abstract = $this->normalize($abstract);
@@ -332,7 +335,7 @@ class Container implements ArrayAccess, ContainerContract
         // will be registered with the container so we can resolve it out later.
         if (is_array($abstract)) {
             list($abstract, $alias) = $this->extractAlias($abstract);
-
+            //$abstract如果是一个数组,设置到 $this->aliases
             $this->alias($abstract, $alias);
         }
 
@@ -341,6 +344,7 @@ class Container implements ArrayAccess, ContainerContract
         // We'll check to determine if this type has been bound before, and if it has
         // we will fire the rebound callbacks registered with the container and it
         // can be updated with consuming classes that have gotten resolved here.
+        //是否存在于 bindings 或者 instances 或者 aliases里面
         $bound = $this->bound($abstract);
 
         $this->instances[$abstract] = $instance;
@@ -631,6 +635,7 @@ class Container implements ArrayAccess, ContainerContract
         // If an instance of the type is currently being managed as a singleton we'll
         // just return an existing instance instead of instantiating new instances
         // so the developer can keep using the same objects instance every time.
+        //如果先调用了instance方法就会直接返回注册的实例
         if (isset($this->instances[$abstract])) {
             return $this->instances[$abstract];
         }
@@ -1215,6 +1220,8 @@ class Container implements ArrayAccess, ContainerContract
         // If the value is not a Closure, we will make it one. This simply gives
         // more "drop-in" replacement functionality for the Pimple which this
         // container's simplest functions are base modeled and built after.
+
+        //如果$value不是一个匿名函数,就构造成匿名函数
         if (! $value instanceof Closure) {
             $value = function () use ($value) {
                 return $value;

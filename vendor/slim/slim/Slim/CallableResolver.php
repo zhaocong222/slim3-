@@ -59,11 +59,11 @@ final class CallableResolver implements CallableResolverInterface
 
                 $class = $matches[1];
                 $method = $matches[2];
-
+                
                 if ($this->container->has($class)) {
+                    //如果注册了，会直接走这里
                     $resolved = [$this->container->get($class), $method];
                 } else {
-
                     if (!class_exists($class)) {
                         throw new RuntimeException(sprintf('Callable %s does not exist', $class));
                     }

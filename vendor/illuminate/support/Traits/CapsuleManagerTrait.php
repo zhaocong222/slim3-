@@ -30,8 +30,9 @@ trait CapsuleManagerTrait
     protected function setupContainer(Container $container)
     {
         $this->container = $container;
-
+        //bound 验证 config是否存在于 bindings 或者 instances 或者 aliases里面
         if (! $this->container->bound('config')) {
+            //$this->instances['config'] = new Fluent
             $this->container->instance('config', new Fluent);
         }
     }

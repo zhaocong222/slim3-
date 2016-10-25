@@ -57,6 +57,14 @@ class ConnectionFactory
      */
     protected function createSingleConnection(array $config)
     {
+        /*
+         * createPdoResolver
+         *
+         * return function () use ($config) {
+            return $this->createConnector($config)->connect($config);
+        };
+         *
+         */
         $pdo = $this->createPdoResolver($config);
 
         return $this->createConnection(

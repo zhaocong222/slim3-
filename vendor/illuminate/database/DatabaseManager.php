@@ -65,6 +65,7 @@ class DatabaseManager implements ConnectionResolverInterface
         // provided in the application. Once we've created the connections we will
         // set the "fetch mode" for PDO which determines the query return types.
         if (! isset($this->connections[$name])) {
+            //$name default
             $connection = $this->makeConnection($name);
 
             $this->setPdoForType($connection, $type);
@@ -84,7 +85,6 @@ class DatabaseManager implements ConnectionResolverInterface
     protected function parseConnectionName($name)
     {
         $name = $name ?: $this->getDefaultConnection();
-
         return Str::endsWith($name, ['::read', '::write'])
                             ? explode('::', $name, 2) : [$name, null];
     }
@@ -155,6 +155,7 @@ class DatabaseManager implements ConnectionResolverInterface
      */
     protected function makeConnection($name)
     {
+        //拿到db的配置信息
         $config = $this->getConfig($name);
 
         // First we will check by the connection name to see if an extension has been
@@ -164,6 +165,7 @@ class DatabaseManager implements ConnectionResolverInterface
             return call_user_func($this->extensions[$name], $config, $name);
         }
 
+        //db驱动
         $driver = $config['driver'];
 
         // Next we will check to see if an extension has been registered for a driver
@@ -172,7 +174,7 @@ class DatabaseManager implements ConnectionResolverInterface
         if (isset($this->extensions[$driver])) {
             return call_user_func($this->extensions[$driver], $config, $name);
         }
-
+        //echo get_class($this->factory); //Illuminate\Database\Connectors\ConnectionFactory
         return $this->factory->make($config, $name);
     }
 
@@ -226,6 +228,7 @@ class DatabaseManager implements ConnectionResolverInterface
      *
      * @throws \InvalidArgumentException
      */
+    //返回db的配置信息
     protected function getConfig($name)
     {
         $name = $name ?: $this->getDefaultConnection();
@@ -234,7 +237,7 @@ class DatabaseManager implements ConnectionResolverInterface
         // connection configurations and get the configurations for the given name.
         // If the configuration doesn't exist, we'll throw an exception and bail.
         $connections = $this->app['config']['database.connections'];
-
+        //从$connections数组找键为$name的元素
         if (is_null($config = Arr::get($connections, $name))) {
             throw new InvalidArgumentException("Database [$name] not configured.");
         }

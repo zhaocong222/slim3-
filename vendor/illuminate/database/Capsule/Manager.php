@@ -29,11 +29,13 @@ class Manager
      */
     public function __construct(Container $container = null)
     {
+        //$this->container = new Container
         $this->setupContainer($container ?: new Container);
 
         // Once we have the container setup, we will setup the default configuration
         // options in the container "config" binding. This will make the database
         // manager work correctly out of the box without extreme configuration.
+        //设置一些数据库的默认配置 fluent的attributes属性
         $this->setupDefaultConfiguration();
 
         $this->setupManager();
@@ -46,8 +48,10 @@ class Manager
      */
     protected function setupDefaultConfiguration()
     {
+        //echo get_class($this->container); //Illuminate\Container\Container
+        //$this->container['config']['database.fetch']二维数组，首先看成$this->container['config']调用offsetGet方法
+        //返回来的是对象Fluent, 分析可得知，把database的配置信息都赋值给对象Fluent的attributes属性
         $this->container['config']['database.fetch'] = PDO::FETCH_OBJ;
-
         $this->container['config']['database.default'] = 'default';
     }
 
@@ -117,8 +121,9 @@ class Manager
      */
     public function addConnection(array $config, $name = 'default')
     {
-        $connections = $this->container['config']['database.connections'];
-
+        //$config 为依赖依赖文件里面的$c['settings']['db'],就是配置文件里的
+        $connections = $this->container['config']['database.connections']; //null
+        
         $connections[$name] = $config;
 
         $this->container['config']['database.connections'] = $connections;
@@ -131,6 +136,7 @@ class Manager
      */
     public function bootEloquent()
     {
+        //$this->manager = new DatabaseManager($this->container, $factory);
         Eloquent::setConnectionResolver($this->manager);
 
         // If we have an event dispatcher instance, we will go ahead and register it

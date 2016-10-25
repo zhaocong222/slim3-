@@ -117,6 +117,10 @@ class Fluent implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      */
     public function offsetSet($offset, $value)
     {
+        //$offset           $value
+        //database.fetch    PDO::FETCH_OBJ
+
+        //执行set方法
         $this->{$offset} = $value;
     }
 

@@ -119,7 +119,6 @@ class Arr
         if ($array instanceof ArrayAccess) {
             return $array->offsetExists($key);
         }
-
         return array_key_exists($key, $array);
     }
 
@@ -133,6 +132,7 @@ class Arr
      */
     public static function first($array, callable $callback = null, $default = null)
     {
+
         if (is_null($callback)) {
             if (empty($array)) {
                 return value($default);
@@ -246,6 +246,7 @@ class Arr
     public static function get($array, $key, $default = null)
     {
         if (! static::accessible($array)) {
+            //如果$array不是数组 , $default是个匿名函数，返回匿名函数里的return ,否则返回$default
             return value($default);
         }
 

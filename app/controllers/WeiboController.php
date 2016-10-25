@@ -14,6 +14,6 @@ class WeiboController
 
     public function index(Request $request, Response $response, $args)
     {
-        echo __METHOD__;
+        
     }
 }
